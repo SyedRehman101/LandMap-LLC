@@ -68,11 +68,11 @@ const Home = () => {
     return (
 
 
-        <div className="w-full gap-4 h-screen ">
+        <div className="w-full gap-4 h-screen overflow-hidden">
 
 
             <div className="w-full col-span-4 h-full flex justify-center items-center">
-                <div id="grid-container" className="w-full h-[45rem] overflow-hidden relative transition-all duration-300" >
+                <div id="grid-container" className="w-full h-[45rem]  relative transition-all duration-300" >
 
                     <div className="w-full transition-all  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
 
