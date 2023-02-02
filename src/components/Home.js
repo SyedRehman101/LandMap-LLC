@@ -37,6 +37,19 @@ const Home = () => {
 
     useEffect(() => {
 
+        window.addEventListener("wheel", (e) => {
+            e.preventDefault()
+            console.log(e.deltaY);
+
+            if (e.deltaY > 0.2) {
+                zoomOut()
+            }
+            else if (e.deltaY < 2) {
+                zoomIn()
+            }
+            else { }
+        })
+
         let boxes = "";
 
         for (let i = 0; i < gridNumber; i++) {
@@ -77,20 +90,22 @@ const Home = () => {
                     <div className="w-full transition-all  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
 
                     </div>
+
+                    <button onClick={() => {
+                        zoomIn()
+
+                    }} className=' fixed bottom-0 left-10 z-20 bg-white w-10 p-1'>
+                        +
+                    </button>
+                    <button onClick={() => {
+                        zoomOut();
+                    }} className=' fixed bottom-0 left-0 z-20 bg-white w-10 p-1'>
+                        -
+                    </button>
                 </div>
             </div>
 
-            <button onClick={() => {
-                zoomIn()
 
-            }} className='absolute bottom-0 left-10 z-20 bg-white w-10 p-1'>
-                +
-            </button>
-            <button onClick={() => {
-                zoomOut();
-            }} className='absolute bottom-0 left-0 z-20 bg-white w-10 p-1'>
-                -
-            </button>
         </div>
 
 
