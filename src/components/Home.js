@@ -1,17 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet'
-
-
+import React, { useEffect, useState } from 'react'
+import selectedMarker from '../assets/img/selectedMarker.svg'
+import Modal from './Modal';
+import Draggable from 'react-draggable';
 
 const Home = () => {
-    const [gridNumber, setGridNumber] = useState(60000);
+    const gridNumber = 60000;
+
+    const [selectedBoxId, setSelectedBoxId] = useState("");
 
 
     var counter = 1;
-    const zoomIn = () => {
+    const ZoomIn = () => {
         const square = document.getElementById('grid-container');
         if (counter < 2) {
-            counter += 0.1;
+            counter += 0.01;
             square.style.transform = `scale(${counter})`;
 
             square.classList.add("opacity-0");
@@ -22,10 +24,10 @@ const Home = () => {
         }
     }
 
-    const zoomOut = () => {
+    const ZoomOut = () => {
         const square = document.getElementById('grid-container');
         if (counter > 0.2) {
-            counter -= 0.1;
+            counter -= 0.01;
             square.style.transform = `scale(${counter})`;
             square.classList.add("opacity-0");
 
@@ -38,14 +40,11 @@ const Home = () => {
     useEffect(() => {
 
         window.addEventListener("wheel", (e) => {
-            e.preventDefault()
-            console.log(e.deltaY);
-
             if (e.deltaY > 0.2) {
-                zoomOut()
+                ZoomOut()
             }
             else if (e.deltaY < 2) {
-                zoomIn()
+                ZoomIn()
             }
             else { }
         })
@@ -53,63 +52,61 @@ const Home = () => {
         let boxes = "";
 
         for (let i = 0; i < gridNumber; i++) {
-            boxes += '<div class="w-2 h-2 border border-blue-900 flex-none" id="box-' + i + '"></div>'
+            boxes += '<button name="btns" class=" focus:bg-red-700 w-2 h-2 border-t-[0.5px] border-l-[0.5px]  border-blue-800 flex-none" id="box-' + i + '"></button>'
         }
 
         document.getElementById('grid-box').innerHTML = boxes;
 
+        const btns = [...document.getElementsByName("btns")];
 
-        let scrollPos = 0;
 
-        const dbAbba = document.getElementById('grid-container')
+        btns.forEach((elem) => {
+            elem.addEventListener('click', (e) => {
+                const img = document.getElementById('marker');
 
-        dbAbba.addEventListener('scroll', function () {
-            // detects new state and compares it with the new one
-            if ((document.body.getBoundingClientRect()).top > scrollPos) {
-                console.log('ab scale barhe ga')
-                document.getElementById('grid-box').style.transform = 'scale(110%)'
-            }
-            else {
-                console.log('ab scale gire ga')
-                document.getElementById('grid-box').style.transform = 'scale(90%)'
-            }
-            // saves the new position for iteration.
-            scrollPos = (document.body.getBoundingClientRect()).top;
-        });
-    }, [gridNumber])
+                setSelectedBoxId(elem.id)
+
+                const modal = document.getElementById("modal");
+
+                modal.classList.remove('invisible');
+
+                img.style.left = `${e.pageX - 14.45}px`;
+                img.style.top = `${e.pageY - 47}px`;
+                img.style.right = `${-e.pageX - 14.45}`
+            })
+        })
+
+    }, [])
 
     return (
+        <Draggable>
+            <div className="w-full gap-4 h-screen overflow-auto">
+                <div className="w-full col-span-4 h-full flex justify-center items-center">
+                    <div id="grid-container" className="w-full h-[45rem]  absolute transition-all duration-300 flex" >
+                        <div className="w-full transition-all  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
+                        </div>
+                        <div id='marker' className='flex justify-center absolute items-center'>
+                            <img src={selectedMarker} />
+                        </div>
+                        <div className='fixed bottom-5 left-10 z-20'>
 
+                            <button onClick={() => {
+                                ZoomOut();
+                            }} className=' bg-white w-10 p-1'>
+                                -
+                            </button>
+                            <button onClick={() => {
+                                ZoomIn()
 
-        <div className="w-full gap-4 h-screen overflow-hidden">
-
-
-            <div className="w-full col-span-4 h-full flex justify-center items-center">
-                <div id="grid-container" className="w-full h-[45rem]  relative transition-all duration-300" >
-
-                    <div className="w-full transition-all  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
-
+                            }} className='  bg-white w-10 p-1'>
+                                +
+                            </button>
+                        </div>
+                        <Modal selectedBoxId={selectedBoxId} />
                     </div>
-
-                    <button onClick={() => {
-                        zoomIn()
-
-                    }} className=' fixed bottom-0 left-10 z-20 bg-white w-10 p-1'>
-                        +
-                    </button>
-                    <button onClick={() => {
-                        zoomOut();
-                    }} className=' fixed bottom-0 left-0 z-20 bg-white w-10 p-1'>
-                        -
-                    </button>
                 </div>
             </div>
-
-
-        </div>
-
-
-
+        </Draggable>
     )
 }
 

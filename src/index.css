@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.gridBorder {
+    border: 1px solid darkblue;
+}
+
+.crystal {
+    background-color: #00d8d2;
+    height: 6px;
+    rotate: 45deg;
+    width: 6px;
+}
