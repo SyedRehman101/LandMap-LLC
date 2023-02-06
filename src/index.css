@@ -13,3 +13,9 @@
     rotate: 45deg;
     width: 6px;
 }
+
+body {
+    overflow: hidden;
+
+    background-color: darkblue;
+}
