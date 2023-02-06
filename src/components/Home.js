@@ -4,7 +4,7 @@ import Modal from './Modal';
 import Draggable from 'react-draggable';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 const Home = () => {
-    const gridNumber = 60000;
+    const gridNumber = 20000;
 
     const [selectedBoxId, setSelectedBoxId] = useState("");
 
@@ -52,7 +52,7 @@ const Home = () => {
         let boxes = "";
 
         for (let i = 0; i < gridNumber; i++) {
-            boxes += '<button name="btns" class=" active:bg-red-700 w-2 h-2 border-t-[0.5px] border-l-[0.5px]  border-blue-800 flex-none" id="box-' + i + '"></button>'
+            boxes += '<button name="btns" class=" active:bg-red-700 w-2 h-2 border-t-[0.5px] border-l-[0.5px]  border-gray-800 flex-none" id="box-' + i + '"></button>'
         }
 
         document.getElementById('grid-box').innerHTML = boxes;
@@ -81,8 +81,8 @@ const Home = () => {
 
     return (
         <>
-            <div className="w-full gap-4 h-screen overflow-hidden">
-                <div className="w-full col-span-4 h-full flex justify-center items-center">
+            <div className="w-full gap-4 h-screen overflow-hidden relative">
+                <div className="w-full col-span-4 h-full flex justify-center items-center absolute">
                     <TransformWrapper
                         initialScale={1}
 
