@@ -85,8 +85,7 @@ const Home = () => {
                 <div className="w-full col-span-4 h-full flex justify-center items-center">
                     <TransformWrapper
                         initialScale={1}
-                        initialPositionX={-2}
-                        initialPositionY={-2}
+
                     >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                             <>
@@ -121,7 +120,7 @@ const Home = () => {
 
                                             const gridBox = document.getElementById("grid-box");
 
-                                            gridBox.style.transform = "initial"
+
                                             const btns = [...document.getElementsByName("btns")];
 
                                             btns.forEach((elem, index) => {
