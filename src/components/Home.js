@@ -52,7 +52,7 @@ const Home = () => {
         let boxes = "";
 
         for (let i = 0; i < gridNumber; i++) {
-            boxes += '<button name="btns" class=" w-2 h-2 border-t-[0.5px] border-l-[0.5px]  border-blue-800 flex-none" id="box-' + i + '"></button>'
+            boxes += '<button name="btns" class=" active:bg-red-700 w-2 h-2 border-t-[0.5px] border-l-[0.5px]  border-blue-800 flex-none" id="box-' + i + '"></button>'
         }
 
         document.getElementById('grid-box').innerHTML = boxes;
@@ -66,17 +66,6 @@ const Home = () => {
                 // const img = document.getElementById('img-' + index);
 
                 // img.classList.remove('hidden')
-
-                // const btn = document.getElementById();
-
-
-
-                elem.classList.add("bg-red-600")
-
-                console.log(elem.id);
-
-
-
                 setSelectedBoxId(elem.id)
 
                 const modal = document.getElementById("modal");
@@ -96,63 +85,66 @@ const Home = () => {
                 <div className="w-full col-span-4 h-full flex justify-center items-center">
                     <TransformWrapper
                         initialScale={1}
-                        initialPositionX={-1}
-                        initialPositionY={-1}
+                        initialPositionX={-2}
+                        initialPositionY={-2}
                     >
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                             <>
                                 <TransformComponent>
-                                    <div id="grid-container" className=" w-full h-[55rem]  relative flex" >
-                                        {rest.state.scale === 1 ? (
+                                    <div id="grid-container" className=" w-full h-[55rem]  relative transition-all duration-300 flex" >
 
-                                            <div id="btn-container" className="w-full transition-all relative  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
+                                        <Draggable onStart={(e) => {
+
+                                            const btns = [...document.getElementsByName("btns")];
+                                            const gridBox = document.getElementById("grid-box");
+
+
+
+                                            btns.forEach((elem, index) => {
+                                                elem.removeEventListener('click', (e) => {
+                                                    // const index = elem.id.split('-');
+                                                    // const img = document.getElementById('img-' + index);
+
+                                                    // img.classList.remove('hidden')
+                                                    setSelectedBoxId(elem.id)
+
+                                                    const modal = document.getElementById("modal");
+
+                                                    modal.classList.remove('invisible');
+
+
+                                                    // img.style.right = `${-e.pageX - 14.45}`
+                                                })
+                                            })
+
+                                        }} onStop={(e) => {
+
+                                            const gridBox = document.getElementById("grid-box");
+
+                                            gridBox.style.transform = "initial"
+                                            const btns = [...document.getElementsByName("btns")];
+
+                                            btns.forEach((elem, index) => {
+                                                elem.addEventListener('click', (e) => {
+                                                    // const index = elem.id.split('-');
+                                                    // const img = document.getElementById('img-' + index);
+
+                                                    // img.classList.remove('hidden')
+                                                    setSelectedBoxId(elem.id)
+
+                                                    const modal = document.getElementById("modal");
+
+                                                    modal.classList.remove('invisible');
+
+
+                                                    // img.style.right = `${-e.pageX - 14.45}`
+                                                })
+                                            })
+
+                                        }}>
+                                            <div className="w-full transition-all relative  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
                                             </div>
-                                        ) : (
-                                            <Draggable onStart={() => {
-                                                const btns = [...document.getElementsByName("btns")];
-
-
-                                                btns.forEach((elem, index) => {
-                                                    elem.removeEventListener('click', (e) => {
-                                                        // const index = elem.id.split('-');
-                                                        // const img = document.getElementById('img-' + index);
-
-                                                        // img.classList.remove('hidden')
-                                                        setSelectedBoxId(elem.id)
-
-                                                        const modal = document.getElementById("modal");
-
-                                                        modal.classList.remove('invisible');
-
-
-                                                        // img.style.right = `${-e.pageX - 14.45}`
-                                                    })
-                                                })
-                                            }} onStop={() => {
-                                                resetTransform(0)
-                                                const btns = [...document.getElementsByName("btns")];
-
-                                                btns.forEach((elem, index) => {
-                                                    elem.addEventListener('click', (e) => {
-                                                        // const index = elem.id.split('-');
-                                                        // const img = document.getElementById('img-' + index);
-
-                                                        // img.classList.remove('hidden')
-                                                        setSelectedBoxId(elem.id)
-
-                                                        const modal = document.getElementById("modal");
-
-                                                        modal.classList.remove('invisible');
-
-
-                                                        // img.style.right = `${-e.pageX - 14.45}`
-                                                    })
-                                                })
-                                            }}>
-                                                <div id="btn-container" className="w-full transition-all relative  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
-                                                </div>
-                                            </Draggable>
-                                        )}
+                                        </Draggable>
 
                                     </div>
 
