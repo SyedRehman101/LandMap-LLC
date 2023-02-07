@@ -1,10 +1,10 @@
 import React from 'react'
 import LandPreview from '../assets/img/LandPreview.avif';
 import { AiOutlineClose } from 'react-icons/ai';
-import { FaMapMarkerAlt } from 'react-icons/fa';
+import { FaFacebookF, FaMapMarkerAlt, FaRedditAlien, FaTwitter } from 'react-icons/fa';
 const Modal = (props) => {
     return (
-        <div id='modal' className=' invisible  absolute p-8 w-1/5 border-0 border-gray-100 top-14 rounded-lg right-1 bg-black z-30 h-5/6 transition-all duration-500'>
+        <div id='modal' className=' invisible  absolute p-8 w-1/5 border-0 border-gray-100 top-32 rounded-lg right-1 bg-black z-30 h-auto transition-all duration-500'>
             <div className='flex justify-end'>
                 <button onClick={() => {
                     const div = document.getElementById("modal");
@@ -13,41 +13,32 @@ const Modal = (props) => {
                     <AiOutlineClose className='text-gray-400' />
                 </button>
             </div>
-            <img src={LandPreview} />
-            <h4 className='text-white'>{props.selectedBoxId}</h4>
-            <div className=' w-full mt-1 flex'>
-                <p className='bg-blue-500 rounded-sm w-20 p-1 uppercase text-center text-xs text-white font-bold'>regular</p>
-                <div className=' flex'>
-                    <FaMapMarkerAlt className=' text-cyan-400 my-auto ml-2 mr-1' /> <p className='text-white text-sm font-bold my-auto'>17, -35</p>
-                </div>
+            <img className='mx-auto' width={"80%"} src={LandPreview} />
+            <br />
+            <h4 className='text-white'>Serial Number# {props.selectedBoxId}</h4>
+            <div className=' w-full mt-1 flex gap-3'>
+                <button className='bg-purple-400 transition-all hover:bg-purple-600 rounded-sm w-20 p-1 uppercase text-center text-xs text-white font-bold' onClick={()=>{document.getElementById("buy-modal").classList.remove("scale-0")}}>Buy</button>
+                <button className='bg-yellow-700 transition-all hover:bg-yellow-800 rounded-sm w-20 p-1 uppercase text-center text-xs text-white font-bold'>Claim</button>
+
             </div>
 
-            <br />
-            <small className='text-gray-400'>OWNER</small>
-            <br />
-            <a className='text-blue-500 text-xs font-semibold' href='#'>@ActionMask</a>
-            <br />
 
-            <small className='text-gray-400 font-semibold'>WHAT CAN I DO WITH LAND?</small>
+            <div className=' flex mt-4'>
+                <FaMapMarkerAlt className=' text-cyan-400 my-auto ml-2 mr-1' /> <p className='text-white text-sm font-bold my-auto'>17, -35</p>
+            </div>
 
-            <ul className=' text-cyan-400 list-disc px-4'>
+            <div className='flex gap-7 justify-center mt-4'>
+                <a href='#' className='bg-white transition-all duration-500 hover:bg-blue-600 hover:animate-bounce hover:text-white flex justify-center items-center  rounded-full w-10 border-none h-10 uppercase  text-xs font-bold'>
+                    <FaFacebookF className='text-xl' />
+                </a>
+                <a href='#' className='bg-white transition-all duration-500 hover:animate-bounce hover:bg-blue-400 hover:text-white flex justify-center items-center   rounded-full w-10 border-none h-10 uppercase  text-xs font-bold'>
+                    <FaTwitter className='text-2xl' />
+                </a>
+                <a href='#' className='bg-white transition-all duration-500 hover:animate-bounce hover:bg-orange-700 hover:text-white flex justify-center items-center  rounded-full w-10 border-none h-10 uppercase  text-xs font-bold'>
+                    <FaRedditAlien className='text-2xl' />
+                </a>
+            </div>
 
-                <li>
-                    <small className='text-gray-400 font-semibold'>Start building!</small>
-                </li>
-                <li>
-                    <small className='text-gray-400 font-semibold'>Earn special rewards</small>
-                </li>
-                <li>
-                    <small className='text-gray-400 font-semibold'>Exclusive LAND Owner staking</small>
-                </li>
-                <li>
-                    <small className='text-gray-400 font-semibold'>Sell your LAND</small>
-                </li>
-                <li>
-                    <small className='text-gray-400 font-semibold'>Publish and monetize your Experience (2023)</small>
-                </li>
-            </ul>
         </div>
     )
 }
