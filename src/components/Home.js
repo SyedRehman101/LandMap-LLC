@@ -3,11 +3,12 @@ import selectedMarker from '../assets/img/selectedMarker.svg'
 import Modal from './Modal';
 import Draggable from 'react-draggable';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { AiOutlineDrag } from 'react-icons/ai';
 const Home = () => {
     const gridNumber = 20000;
 
     const [selectedBoxId, setSelectedBoxId] = useState("");
-
+    const [isDragging, setIsDragging] = useState(false);
 
     var counter = 1;
     const ZoomIn = () => {
@@ -52,7 +53,7 @@ const Home = () => {
         let boxes = "";
 
         for (let i = 0; i < gridNumber; i++) {
-            boxes += '<button name="btns" class=" active:bg-red-700 w-2 h-2 border-t-[0.5px] border-l-[0.5px]  border-gray-800 flex-none" id="box-' + i + '"></button>'
+            boxes += '<button name="btns" class=" focus:bg-red-700 w-2 h-2 border-t-[0.5px] border-l-[0.5px]  border-gray-800 flex-none" id="box-' + i + '"></button>'
         }
 
         document.getElementById('grid-box').innerHTML = boxes;
@@ -90,72 +91,29 @@ const Home = () => {
                         {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                             <>
                                 <TransformComponent>
-                                    <div id="grid-container" className=" w-full h-[55rem]  relative transition-all duration-300 flex" >
+                                    <div id="grid-container" className=" w-full   h-[45rem]  relative transition-all duration-300 flex" >
+                                        <Draggable onMouseDown={(e) => {
 
-                                        <Draggable onStart={(e) => {
-
-                                            const btns = [...document.getElementsByName("btns")];
-                                            const gridBox = document.getElementById("grid-box");
-
-
-
-                                            btns.forEach((elem, index) => {
-                                                elem.removeEventListener('click', (e) => {
-                                                    // const index = elem.id.split('-');
-                                                    // const img = document.getElementById('img-' + index);
-
-                                                    // img.classList.remove('hidden')
-                                                    setSelectedBoxId(elem.id)
-
-                                                    const modal = document.getElementById("modal");
-
-                                                    modal.classList.remove('invisible');
-
-
-                                                    // img.style.right = `${-e.pageX - 14.45}`
-                                                })
-                                            })
-
-                                        }} onStop={(e) => {
-
-                                            const gridBox = document.getElementById("grid-box");
-
-
-                                            const btns = [...document.getElementsByName("btns")];
-
-                                            btns.forEach((elem, index) => {
-                                                elem.addEventListener('click', (e) => {
-                                                    // const index = elem.id.split('-');
-                                                    // const img = document.getElementById('img-' + index);
-
-                                                    // img.classList.remove('hidden')
-                                                    setSelectedBoxId(elem.id)
-
-                                                    const modal = document.getElementById("modal");
-
-                                                    modal.classList.remove('invisible');
-
-
-                                                    // img.style.right = `${-e.pageX - 14.45}`
-                                                })
-                                            })
-
+                                            e.stopPropagation()
                                         }}>
-                                            <div className="w-full transition-all relative  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
+                                            <div className="w-full border-2  border-gray-800 transition-all relative  duration-300 h-full flex flex-row flex-wrap bg-gray-900 cursor-pointer overflow-hidden" id="grid-box" >
                                             </div>
-                                        </Draggable>
 
+                                            {/* <AiOutlineDrag className='text-white' /> */}
+                                        </Draggable>
                                     </div>
 
                                 </TransformComponent>
                                 <div className='fixed bottom-5 left-10 z-20'>
 
-                                    <button onClick={() => {
+                                    <button onPointerDown={(e) => {
+                                        e.preventDefault()
                                         zoomOut();
                                     }} className=' bg-white w-10 p-1'>
                                         -
                                     </button>
-                                    <button onClick={() => {
+                                    <button onPointerDown={(e) => {
+                                        e.preventDefault()
                                         zoomIn()
 
                                     }} className='  bg-white w-10 p-1'>
